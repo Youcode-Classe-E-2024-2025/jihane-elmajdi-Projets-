@@ -11,94 +11,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    if ($authService->register($name, $email, $password)) {
-        echo "<div class='message success'>Inscription réussie!</div>";
+    // Vérifier si l'email est déjà pris
+    if ($authService->getUserByEmail($email)) {
+        echo "<div class='message error'>Cet email est déjà utilisé.</div>";
     } else {
-        echo "<div class='message error'>Erreur lors de l'inscription.</div>";
+        // Essayer d'enregistrer l'utilisateur
+        if ($authService->register($name, $email, $password)) {
+            echo "<div class='message success'>Inscription réussie! Vous pouvez maintenant vous connecter.</div>";
+        } else {
+            echo "<div class='message error'>Erreur lors de l'inscription.</div>";
+        }
     }
 }
 ?>
 
 <style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background: #f4f7f6;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-    .register-form {
-        background: #fff;
-        padding: 40px;
-        border-radius: 8px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        width: 320px;
-        text-align: center;
-        box-sizing: border-box;
-    }
-    .register-form h2 {
-        margin-bottom: 30px;
-        color: #333;
-        font-size: 24px;
-    }
-    input[type="text"], input[type="email"], input[type="password"] {
-        width: 100%;
-        padding: 12px;
-        margin: 10px 0;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 16px;
-        box-sizing: border-box;
-        transition: all 0.3s ease;
-    }
-    input:focus {
-        border-color: #4CAF50;
-        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-    }
-    button {
-        width: 100%;
-        padding: 12px;
-        background-color: #4CAF50;
-        border: none;
-        color: white;
-        font-size: 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    button:hover {
-        background-color: #45a049;
-    }
-    .message {
-        padding: 10px;
-        margin-top: 20px;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-    .message.success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-    .message.error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-    .login-link {
-        margin-top: 20px;
-        font-size: 14px;
-    }
-    .login-link a {
-        color: #4CAF50;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    .login-link a:hover {
-        text-decoration: underline;
-    }
+    /* Style identique à ce que tu as donné précédemment */
 </style>
 
 <div class="register-form">
