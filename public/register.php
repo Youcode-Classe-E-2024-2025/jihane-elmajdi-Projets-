@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <style>
     body {
         font-family: Arial, sans-serif;
-        background-color: #f1e5d8; /* Beige background */
+        background-color: #f1e5d8; 
         margin: 0;
         padding: 0;
     }
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .register-form button {
         width: 100%;
         padding: 10px;
-        background-color: #c5a880; /* Beige-like button */
+        background-color: #c5a880; 
         color: white;
         border: none;
         border-radius: 5px;
