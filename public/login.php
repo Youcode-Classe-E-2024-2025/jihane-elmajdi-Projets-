@@ -7,18 +7,18 @@ $db = $dbService->getConnection();
 $authService = new AuthenticationService($db);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    if ($authService->register($name, $email, $password)) {
-        echo "<div class='message success'>Inscription réussie!</div>";
+    $user = $authService->login($email, $password);
+
+    if ($user) {
+        echo "<div class='message success'>Connexion réussie! Bienvenue, " . $user['name'] . "</div>";
     } else {
-        echo "<div class='message error'>Erreur lors de l'inscription.</div>";
+        echo "<div class='message error'>Email ou mot de passe incorrect.</div>";
     }
 }
 ?>
-
 <style>
     body {
         font-family: 'Arial', sans-serif;
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         height: 100vh;
         margin: 0;
     }
-    .register-form {
+    .login-form {
         background: #fff;
         padding: 40px;
         border-radius: 8px;
@@ -38,12 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         text-align: center;
         box-sizing: border-box;
     }
-    .register-form h2 {
+    .login-form h2 {
         margin-bottom: 30px;
         color: #333;
         font-size: 24px;
     }
-    input[type="text"], input[type="email"], input[type="password"] {
+    input[type="email"], input[type="password"] {
         width: 100%;
         padding: 12px;
         margin: 10px 0;
@@ -87,29 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         color: #721c24;
         border: 1px solid #f5c6cb;
     }
-    .login-link {
-        margin-top: 20px;
-        font-size: 14px;
-    }
-    .login-link a {
-        color: #4CAF50;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    .login-link a:hover {
-        text-decoration: underline;
-    }
 </style>
 
-<div class="register-form">
-    <h2>S'inscrire</h2>
+<div class="login-form">
+    <h2>Se connecter</h2>
     <form method="POST">
-        <input type="text" name="name" placeholder="Votre nom" required><br>
         <input type="email" name="email" placeholder="Votre email" required><br>
         <input type="password" name="password" placeholder="Votre mot de passe" required><br>
-        <button type="submit">S'inscrire</button>
+        <button type="submit">Se connecter</button>
     </form>
-    <div class="login-link">
-        <p>Déjà un compte ? <a href="login.php">Se connecter</a></p>
-    </div>
 </div>
+
