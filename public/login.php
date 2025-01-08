@@ -10,21 +10,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Vérifier si l'email existe dans la base de données
     $user = $authService->getUserByEmail($email);
 
     if (!$user) {
-        // Si l'email n'est pas trouvé
         echo "<div class='message error'>L'email n'est pas enregistré dans notre système.</div>";
     } else {
-        // Si l'email existe, vérifier le mot de passe
         if ($authService->login($email, $password)) {
             echo "<div class='message success'>Connexion réussie! Bienvenue, " . $user['name'] . "</div>";
-            // Rediriger vers la page de rôle (ajoute ici la redirection vers role.php)
             header("Location: ../Classes/Role.php");
             exit;
         } else {
-            // Si le mot de passe est incorrect
             echo "<div class='message error'>Mot de passe incorrect.</div>";
         }
     }
@@ -32,7 +27,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <style>
-    /* Style identique à celui que tu as fourni précédemment */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f1e5d8; /* Beige background */
+        margin: 0;
+        padding: 0;
+    }
+
+    .login-form {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-form h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    .login-form input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .login-form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #c5a880; /* Beige-like button */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .login-form button:hover {
+        background-color: #a68a60;
+    }
+
+    .message {
+        padding: 10px;
+        margin-bottom: 15px;
+        text-align: center;
+        border-radius: 5px;
+    }
+
+    .message.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .message.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
 </style>
 
 <div class="login-form">
