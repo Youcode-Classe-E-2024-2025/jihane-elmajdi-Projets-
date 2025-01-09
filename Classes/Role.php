@@ -13,12 +13,11 @@ if (!isset($_SESSION['user'])) {
 }
 
 $user = $_SESSION['user'];
-$role_id = isset($_SESSION['role_id']) ? $_SESSION['role_id'] : 4; //  invité par défaut
-
+$role_id = isset($_SESSION['role_id']) ? $_SESSION['role_id'] : 4; // invité par défaut
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['role_id'])) {
     $role_id = $_POST['role_id'];
-    
+
     // Mettre à jour le rôle dans la base de données
     $query = "UPDATE users SET role_id = :role_id WHERE id = :user_id";
     $stmt = $db->prepare($query);
@@ -26,12 +25,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['role_id'])) {
     $stmt->bindParam(':user_id', $user['id']);
     if ($stmt->execute()) {
         $_SESSION['role_id'] = $role_id; // Mettre à jour le rôle dans la session
-        $message = "<div class='message success'>Rôle mis à jour avec succès!</div>";
+
+        // Rediriger vers la page correspondante
+        switch ($role_id) {
+            case 1:
+                header("Location: ../pages/Administrateur.php");
+                break;
+            case 2:
+                header("Location: ../pages/Chef de Projet.php");
+                break;
+            case 3:
+                header("Location: ../pages/Membre.php");
+                break;
+            case 4:
+                header("Location: ../pages/invite.php");
+                break;
+            default:
+            header("Location: ../pages/error.php");
+                break;
+        }
+        exit;
     } else {
         $message = "<div class='message error'>Erreur lors de la mise à jour du rôle.</div>";
     }
 }
 ?>
+
 
 <style>
     body {
