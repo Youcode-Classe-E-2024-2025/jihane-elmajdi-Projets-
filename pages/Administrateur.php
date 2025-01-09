@@ -80,7 +80,7 @@ $project_count = $stmt_projects->fetchColumn();
             </div>
             <div class="action-card">
                 <h3>Gérer les utilisateurs</h3>
-                <a href="manage_users.php" class="btn">Gérer</a>
+                <a href="gerer_utilisateurs.php" class="btn">Gérer</a>
             </div>
             <div class="action-card">
                 <h3>Gérer les projets</h3>
