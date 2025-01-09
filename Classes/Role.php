@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['role_id'])) {
                 header("Location: ../pages/Administrateur.php");
                 break;
             case 2:
-                header("Location: ../pages/Chef de Projet.php");
+                header("Location: ../pages/Chef-de-Projet.php");
                 break;
             case 3:
                 header("Location: ../pages/Membre.php");
