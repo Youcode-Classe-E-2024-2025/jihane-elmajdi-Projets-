@@ -40,21 +40,21 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gérer les utilisateurs</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <h1>Gérer les utilisateurs</h1>
 
+        <!-- Affichage du succès de l'action -->
         <?php if (isset($_GET['success'])): ?>
             <div class="alert success">
                 Utilisateur ajouté ou supprimé avec succès !
             </div>
         <?php endif; ?>
 
-        <a href="ajouter_utilisateur.php">
-            <button type="button">Ajouter un utilisateur</button>
-        </a>
-
+        <!-- Table des utilisateurs -->
         <table>
             <thead>
                 <tr>
@@ -91,20 +91,6 @@ try {
     background-color: #f4f4f9;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-button {
-    background-color: #5d4037;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #8d6e63;
 }
 
 table {
