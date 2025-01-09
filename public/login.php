@@ -2,7 +2,6 @@
 require_once '../config/database.php';
 require_once '../Services/AuthenticationService.php';
 
-// Connexion à la base de données
 $dbService = new DatabaseService();
 $db = $dbService->getConnection();
 $authService = new AuthenticationService($db);
@@ -11,24 +10,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-   
     $user = $authService->getUserByEmail($email);
 
     if (!$user) {
         $message = "<div class='message error'>L'email n'est pas enregistré dans notre système.</div>";
     } else {
-       
-        if (password_verify($password, $user['password'])) {
-            session_start(); 
+        if ($authService->login($email, $password)) {
+            session_start();
             $_SESSION['user'] = $user;
+            $_SESSION['role_id'] = $user['role_id']; 
             header("Location: ../Classes/Role.php");
             exit;
         } else {
             $message = "<div class='message error'>Mot de passe incorrect.</div>";
         }
     }
-    
+}
 ?>
+
 
 <style>
     body {
