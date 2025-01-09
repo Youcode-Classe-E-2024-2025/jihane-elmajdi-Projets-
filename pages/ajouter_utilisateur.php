@@ -1,15 +1,12 @@
 <?php
 session_start();
 
-
 if (!isset($_SESSION['user']) || $_SESSION['role_id'] != 1) {
     header("Location: ../login.php");
     exit;
 }
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  
     $host = 'localhost';
     $dbname = 'project_management';
     $username = 'root';
@@ -19,13 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-       
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $role_id = $_POST['role_id'];
 
-        
         $query = "INSERT INTO users (name, email, password, role_id, created_at) VALUES (:name, :email, :password, :role_id, NOW())";
         $stmt = $pdo->prepare($query);
         $stmt->execute([
@@ -35,10 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':role_id' => $role_id,
         ]);
 
-     
         header("Location: Administrateur.php?success=1");
         exit;
-
     } catch (PDOException $e) {
         die("Erreur de connexion : " . $e->getMessage());
     }
@@ -77,51 +70,126 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="4">Invité</option>
             </select>
         </div>
-        <button type="submit">Ajouter</button>
+        <div class="button-container">
+            <button type="submit">Ajouter</button>
+        </div>
     </form>
 </div>
 </body>
 </html>
 
 <style>
-/* Style pour la page d'ajout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    padding: 20px;
+}
+
 .container {
     max-width: 600px;
     margin: 50px auto;
-    padding: 20px;
-    background-color: #f4f4f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    background: linear-gradient(135deg, #f5d0a9, #e0c1a6); 
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    color: #333;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.container:hover {
+    transform: scale(1.05);
+}
+
+h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    color: #5d4037;
+}
+
+
+form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
 }
 
 form div {
-    margin-bottom: 15px;
+    margin: 0;
 }
 
 label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #5d4037; 
 }
 
 input, select {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    background: rgba(255, 255, 255, 1);
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
 }
 
 button {
-    background-color: #5d4037;
-    color: white;
+    background-color: #d9a872; 
+    color: #fff;
     border: none;
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 14px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 30px;
     cursor: pointer;
-    border-radius: 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 button:hover {
-    background-color: #8d6e63;
+    background-color: #c58d54; 
+    transform: translateY(-3px);
 }
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 30px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
 </style>
