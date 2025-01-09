@@ -13,20 +13,20 @@ if (!isset($_SESSION['user'])) {
 }
 
 $user = $_SESSION['user'];
-$role_id = isset($_SESSION['role_id']) ? $_SESSION['role_id'] : 4; // invité par défaut
+$role_id = isset($_SESSION['role_id']) ? $_SESSION['role_id'] : 4; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['role_id'])) {
     $role_id = $_POST['role_id'];
 
-    // Mettre à jour le rôle dans la base de données
+   
     $query = "UPDATE users SET role_id = :role_id WHERE id = :user_id";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':role_id', $role_id);
     $stmt->bindParam(':user_id', $user['id']);
     if ($stmt->execute()) {
-        $_SESSION['role_id'] = $role_id; // Mettre à jour le rôle dans la session
+        $_SESSION['role_id'] = $role_id; 
 
-        // Rediriger vers la page correspondante
+        
         switch ($role_id) {
             case 1:
                 header("Location: ../pages/Administrateur.php");
@@ -36,9 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['role_id'])) {
                 break;
             case 3:
                 header("Location: ../pages/Membre.php");
-                break;
-            case 4:
-                header("Location: ../pages/invite.php");
                 break;
             default:
             header("Location: ../pages/error.php");
@@ -167,13 +164,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['role_id'])) {
             <h3>Membre</h3>
             <form method="POST">
                 <button type="submit" name="role_id" value="3">Choisir</button>
-            </form>
-        </div>
-
-        <div class="role-card">
-            <h3>Invité</h3>
-            <form method="POST">
-                <button type="submit" name="role_id" value="4" <?php echo $role_id == 4 ? 'disabled' : ''; ?>>Choisir</button>
             </form>
         </div>
     </div>
