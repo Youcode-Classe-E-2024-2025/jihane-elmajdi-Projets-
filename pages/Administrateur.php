@@ -1,5 +1,4 @@
 <?php
-// تأكد من أن المستخدم لديه صلاحيات الإدارة
 session_start();
 if (!isset($_SESSION['user']) || $_SESSION['role_id'] != 1) {
     header("Location: ../login.php");
@@ -8,7 +7,6 @@ if (!isset($_SESSION['user']) || $_SESSION['role_id'] != 1) {
 
 $user = $_SESSION['user'];
 
-// Connexion à la base de données
 $host = 'localhost'; 
 $dbname = 'project_management'; 
 $username = 'root'; 
@@ -21,12 +19,12 @@ try {
     die("Erreur de connexion : " . $e->getMessage());
 }
 
-// Récupérer le nombre d'utilisateurs
+
 $sql_users = "SELECT COUNT(*) FROM users";
 $stmt_users = $pdo->query($sql_users);
 $user_count = $stmt_users->fetchColumn();
 
-// Récupérer le nombre de projets
+
 $sql_projects = "SELECT COUNT(*) FROM projects";
 $stmt_projects = $pdo->query($sql_projects);
 $project_count = $stmt_projects->fetchColumn();
@@ -74,7 +72,7 @@ $project_count = $stmt_projects->fetchColumn();
         <div class="action-cards">
             <div class="action-card">
                 <h3>Ajouter un utilisateur</h3>
-                <a href="add_user.php" class="btn">Ajouter</a>
+                <a href="ajouter_utilisateur.php" class="btn">Ajouter</a>
             </div>
             <div class="action-card">
                 <h3>Ajouter un projet</h3>
@@ -105,7 +103,7 @@ $project_count = $stmt_projects->fetchColumn();
 
 <style>
     body {
-        font-family: 'Roboto', sans-serif; /* Using a Google Font */
+        font-family: 'Roboto', sans-serif; 
         background: linear-gradient(to right, #f4f4f9, #e0e0e0);
         margin: 0;
         padding: 0;
