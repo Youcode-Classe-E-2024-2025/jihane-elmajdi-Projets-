@@ -13,9 +13,9 @@ if (!isset($_SESSION['user'])) {
 }
 
 $user = $_SESSION['user'];
-$role_id = isset($_SESSION['role_id']) ? $_SESSION['role_id'] : 4; // 4 = invité par défaut
+$role_id = isset($_SESSION['role_id']) ? $_SESSION['role_id'] : 4; //  invité par défaut
 
-// Si on reçoit un changement de rôle
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['role_id'])) {
     $role_id = $_POST['role_id'];
     
@@ -35,44 +35,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['role_id'])) {
 
 <style>
     body {
-        font-family: Arial, sans-serif;
-        background-color: #f1e5d8;
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(to right, #f5e7de, #e4d6c5);
         margin: 0;
         padding: 0;
     }
 
+    .container {
+        max-width: 900px;
+        margin: 50px auto;
+        text-align: center;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+        color: #5d4037;
+        margin-bottom: 20px;
+    }
+
+    .role-cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
     .role-card {
         width: 200px;
-        margin: 20px;
         padding: 20px;
         text-align: center;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        display: inline-block;
+        border-radius: 15px;
+        background: linear-gradient(to bottom, #f8f5f1, #eae3d8);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .role-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
     }
 
     .role-card h3 {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
+        color: #5d4037;
     }
 
     .role-card button {
-        padding: 10px;
-        background-color: #c5a880;
-        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #8d6e63;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
     }
 
     .role-card button:hover {
-        background-color: #a68a60;
+        background-color: #6d4c41;
+        transform: scale(1.05);
+    }
+
+    .role-card button:disabled {
+        background-color: #d3c0b4;
+        color: #aaa;
+        cursor: not-allowed;
+        transform: none;
     }
 
     .message {
         padding: 10px;
         margin-bottom: 15px;
-        text-align: center;
         border-radius: 5px;
+        text-align: center;
     }
 
     .message.success {
@@ -121,4 +159,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['role_id'])) {
         </div>
     </div>
 </div>
-

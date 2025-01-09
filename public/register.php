@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($authService->getUserByEmail($email)) {
         echo "<div class='message error'>Cet email est déjà utilisé.</div>";
     } else {
-        if ($authService->register($name, $email, $password)) {
+        if ($AuthenticationService->register($name, $email, $password)) {
             echo "<div class='message success'>Inscription réussie! Vous pouvez maintenant vous connecter.</div>";
         } else {
             echo "<div class='message error'>Erreur lors de l'inscription.</div>";
