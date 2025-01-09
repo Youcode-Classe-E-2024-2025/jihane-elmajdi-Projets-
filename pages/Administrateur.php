@@ -76,7 +76,7 @@ $project_count = $stmt_projects->fetchColumn();
             </div>
             <div class="action-card">
                 <h3>Ajouter un projet</h3>
-                <a href="add_project.php" class="btn">Ajouter</a>
+                <a href="ajouter_projet.php" class="btn">Ajouter</a>
             </div>
             <div class="action-card">
                 <h3>Gérer les utilisateurs</h3>
