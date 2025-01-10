@@ -74,34 +74,11 @@ header h1 {
     font-size: 32px;
     font-weight: bold;
 }
-
 nav ul {
     list-style: none;
     padding: 0;
     margin-top: 15px;
 }
-
-nav ul li {
-    display: inline-block;
-    margin-right: 25px;
-}
-
-nav ul li a {
-    color: #fff;
-    font-size: 20px;
-    font-weight: bold;
-    text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-
-nav ul li a:hover {
-    background-color: #d9a63d; 
-    color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
 .dashboard {
     margin-top: 30px;
 }
@@ -250,15 +227,6 @@ table a:hover {
 <div class="container">
     <header>
         <h1>Bienvenue, <?php echo htmlspecialchars($user['name']); ?> (Administrateur)</h1>
-        <nav>
-            <ul>
-                <li><a href="manage_users.php">Gérer les utilisateurs</a></li>
-                <li><a href="manage_projects.php">Gérer les projets</a></li>
-                <li><a href="manage_roles.php">Gérer les rôles</a></li>
-                <li><a href="settings.php">Paramètres</a></li>
-                <li><a href="logout.php">Se déconnecter</a></li>
-            </ul>
-        </nav>
     </header>
 
     <section class="dashboard">
@@ -279,15 +247,15 @@ table a:hover {
         <div class="action-cards">
             <div class="action-card">
                 <h3>Ajouter un utilisateur</h3>
-                <a href="add_user.php" class="btn">Ajouter</a>
+                <a href="ajouter_utilisateur.php" class="btn">Ajouter</a>
             </div>
             <div class="action-card">
                 <h3>Ajouter un projet</h3>
-                <a href="add_project.php" class="btn">Ajouter</a>
+                <a href="ajouter_projet.php" class="btn">Ajouter</a>
             </div>
             <div class="action-card">
                 <h3>Gérer les rôles</h3>
-                <a href="manage_roles.php" class="btn">Gérer</a>
+                <a href="gerer_role.php" class="btn">Gérer</a>
             </div>
         </div>
 
