@@ -183,7 +183,7 @@ tr:hover {
                             echo htmlspecialchars($role_name);
                             ?>
                         </td>
-                        <td><a href="edit_role.php?id=<?php echo $user_item['id']; ?>">Modifier le rôle</a></td>
+                        <td><a href="form_modification.php?id=<?php echo $user_item['id']; ?>">Modifier</a></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

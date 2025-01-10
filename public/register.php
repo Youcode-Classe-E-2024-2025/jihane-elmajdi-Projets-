@@ -2,19 +2,25 @@
 require_once '../config/database.php';
 require_once '../Services/AuthenticationService.php';
 
+// Création de la connexion à la base de données
 $dbService = new DatabaseService();
 $db = $dbService->getConnection();
+
+// Instanciation du service d'authentification
 $authService = new AuthenticationService($db);
 
+// Vérification si la méthode est POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    // Vérification si l'email existe déjà
     if ($authService->getUserByEmail($email)) {
         echo "<div class='message error'>Cet email est déjà utilisé.</div>";
     } else {
-        if ($AuthenticationService->register($name, $email, $password)) {
+        // Inscription de l'utilisateur
+        if ($authService->register($name, $email, $password)) {
             echo "<div class='message success'>Inscription réussie! Vous pouvez maintenant vous connecter.</div>";
         } else {
             echo "<div class='message error'>Erreur lors de l'inscription.</div>";

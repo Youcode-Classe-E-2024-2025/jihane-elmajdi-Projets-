@@ -2,7 +2,7 @@
 // Démarrer la session
 session_start();
 
-// Vérifier si l'utilisateur est connecté et si son rôle est celui d'un membre (role_id = 3)
+
 if (!isset($_SESSION['user']) || $_SESSION['role_id'] != 3) {
     header("Location: ../login.php");
     exit;
@@ -10,11 +10,11 @@ if (!isset($_SESSION['user']) || $_SESSION['role_id'] != 3) {
 
 $user = $_SESSION['user'];
 
-// Connexion à la base de données (à adapter en fonction de ta configuration)
-$host = 'localhost'; // hôte de la base de données
-$dbname = 'project_management'; // nom de la base de données
-$username = 'root'; // nom d'utilisateur de la base de données
-$password = ''; // mot de passe de la base de données
+
+$host = 'localhost';
+$dbname = 'project_management'; 
+$username = 'root'; 
+$password = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
@@ -23,13 +23,13 @@ try {
     die("Connection failed: " . $e->getMessage());
 }
 
-// Requête pour récupérer le nombre de tâches assignées à ce membre
-$user_id = $user['id']; // ID de l'utilisateur connecté
+
+$user_id = $user['id'];
 $query = "SELECT COUNT(*) FROM tasks WHERE assigned_to = :user_id";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmt->execute();
-$task_count = $stmt->fetchColumn(); // Récupère le nombre de tâches assignées
+$task_count = $stmt->fetchColumn(); 
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +38,7 @@ $task_count = $stmt->fetchColumn(); // Récupère le nombre de tâches assignée
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de bord Membre</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Si vous avez un fichier CSS externe -->
+    <link rel="stylesheet" href="styles.css"> 
 </head>
 <body>
 
@@ -62,11 +62,11 @@ $task_count = $stmt->fetchColumn(); // Récupère le nombre de tâches assignée
         <div class="stats">
             <div class="stat-card">
                 <h3>Nombre de projets</h3>
-                <p>0</p> <!-- Nombre de projets récupéré de la base de données -->
+                <p>0</p> 
             </div>
             <div class="stat-card">
                 <h3>Nombre de tâches</h3>
-                <p><?php echo $task_count; ?></p> <!-- Nombre de tâches assignées, dynamique -->
+                <p><?php echo $task_count; ?></p>
             </div>
         </div>
 
@@ -82,7 +82,7 @@ $task_count = $stmt->fetchColumn(); // Récupère le nombre de tâches assignée
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Exemple de tâche, on va récupérer ces tâches depuis la base de données -->
+             
                     <?php
                     $query_tasks = "SELECT * FROM tasks WHERE assigned_to = :user_id";
                     $stmt_tasks = $pdo->prepare($query_tasks);
@@ -114,7 +114,7 @@ $task_count = $stmt->fetchColumn(); // Récupère le nombre de tâches assignée
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Exemple de projet, on va récupérer ces projets depuis la base de données -->
+                    
                     <tr>
                         <td>Projet X</td>
                         <td>Description du projet X</td>

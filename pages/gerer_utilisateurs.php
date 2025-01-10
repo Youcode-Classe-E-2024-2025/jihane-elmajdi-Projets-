@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-// Vérifier si l'utilisateur est un administrateur
+
 if (!isset($_SESSION['user']) || $_SESSION['role_id'] != 1) {
     header("Location: ../login.php");
     exit;
 }
 
-// Connexion à la base de données
+
 $host = 'localhost';
 $dbname = 'project_management';
 $username = 'root';
@@ -17,7 +17,7 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Suppression d'un utilisateur
+  
     if (isset($_GET['delete'])) {
         $deleteId = $_GET['delete'];
         $stmt = $pdo->prepare("DELETE FROM users WHERE id = :id");
@@ -26,7 +26,7 @@ try {
         exit;
     }
 
-    // Récupérer les utilisateurs
+    
     $stmt = $pdo->query("SELECT id, name, email, role_id FROM users");
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
@@ -47,14 +47,14 @@ try {
     <div class="container">
         <h1>Gérer les utilisateurs</h1>
 
-        <!-- Affichage du succès de l'action -->
+       
         <?php if (isset($_GET['success'])): ?>
             <div class="alert success">
                 Utilisateur ajouté ou supprimé avec succès !
             </div>
         <?php endif; ?>
 
-        <!-- Table des utilisateurs -->
+       
         <table>
             <thead>
                 <tr>
@@ -83,7 +83,7 @@ try {
 </html>
 
 <style>
-/* Style de la page de gestion des utilisateurs */
+
 .container {
     max-width: 900px;
     margin: 50px auto;
