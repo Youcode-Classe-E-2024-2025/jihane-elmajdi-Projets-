@@ -8,7 +8,6 @@ if (!isset($_SESSION['user']) || $_SESSION['role_id'] != 2) {
 
 $user = $_SESSION['user'];
 
-
 $host = 'localhost'; 
 $dbname = 'project_management'; 
 $username = 'root'; 
@@ -21,17 +20,16 @@ try {
     die("Erreur de connexion : " . $e->getMessage());
 }
 
-
 $sql_projects = "SELECT * FROM projects WHERE manager_id = ?";
 $stmt_projects = $pdo->prepare($sql_projects);
 $stmt_projects->execute([$user['id']]);
 $projects = $stmt_projects->fetchAll();
 
-
 $sql_tasks = "SELECT * FROM tasks WHERE assigned_to = ?";
 $stmt_tasks = $pdo->prepare($sql_tasks);
 $stmt_tasks->execute([$user['id']]);
 $tasks = $stmt_tasks->fetchAll();
+
 ?>
 
 <!DOCTYPE html>
@@ -39,22 +37,12 @@ $tasks = $stmt_tasks->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de bord Chef de Projet</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="container">
     <header>
         <h1>Bienvenue, <?php echo htmlspecialchars($user['name']); ?> (Chef de Projet)</h1>
-        <nav>
-            <ul>
-                <li><a href="manage_projects.php">Gérer les projets</a></li>
-                <li><a href="manage_tasks.php">Gérer les tâches</a></li>
-                <li><a href="settings.php">Paramètres</a></li>
-                <li><a href="logout.php">Se déconnecter</a></li>
-            </ul>
-        </nav>
     </header>
 
     <section class="dashboard">
@@ -75,7 +63,7 @@ $tasks = $stmt_tasks->fetchAll();
         <div class="action-cards">
             <div class="action-card">
                 <h3>Ajouter un projet</h3>
-                <a href="add_project.php" class="btn">Ajouter</a>
+                <a href="ajouterprojet.php" class="btn">Ajouter</a>
             </div>
             <div class="action-card">
                 <h3>Ajouter une tâche</h3>

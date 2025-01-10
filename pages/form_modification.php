@@ -1,42 +1,48 @@
 <?php
+// Démarrage de la session
 session_start();
 
-// Vérification de la session et du rôle
+// Vérification si l'utilisateur est connecté et s'il a le rôle d'administrateur (role_id = 1)
 if (!isset($_SESSION['user']) || $_SESSION['role_id'] != 1) {
     header("Location: ../login.php");
     exit;
 }
 
+// Vérification de l'existence de l'identifiant de l'utilisateur dans l'URL
 if (!isset($_GET['id'])) {
     die("Aucun utilisateur sélectionné.");
 }
 
+// Récupération de l'identifiant de l'utilisateur
 $userId = $_GET['id'];
 
-// Connexion à la base de données
+// Informations de connexion à la base de données
 $host = 'localhost';
 $dbname = 'project_management';
 $username = 'root';
 $password = '';
 
 try {
+    // Connexion à la base de données avec PDO
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
+    // Gestion des erreurs de connexion
     die("Erreur de connexion : " . $e->getMessage());
 }
 
-// Récupérer l'utilisateur
+// Requête pour récupérer les informations de l'utilisateur sélectionné
 $sql = "SELECT * FROM users WHERE id = ?";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$userId]);
 $user = $stmt->fetch();
 
+// Vérifier si l'utilisateur existe
 if (!$user) {
     die("Utilisateur non trouvé.");
 }
 
-// Récupérer les rôles
+// Requête pour récupérer tous les rôles disponibles
 $sql_roles = "SELECT * FROM roles";
 $stmt_roles = $pdo->query($sql_roles);
 $roles = $stmt_roles->fetchAll();
@@ -47,45 +53,8 @@ $roles = $stmt_roles->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier le rôle de l'utilisateur</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-<div class="container">
-    <header>
-        <h1>Modifier le rôle de l'utilisateur : <?php echo htmlspecialchars($user['name']); ?></h1>
-        <nav>
-            <ul>
-                <li><a href="gerer_role.php">Gérer les rôles</a></li>
-                <li><a href="logout.php">Se déconnecter</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section class="form-section">
-        <h2>Formulaire de modification du rôle</h2>
-        <form action="update_role.php" method="POST">
-            <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
-
-            <label for="role">Sélectionner un rôle :</label>
-            <select name="role_id" id="role" required>
-                <?php foreach ($roles as $role): ?>
-                    <option value="<?php echo $role['id']; ?>" <?php echo ($role['id'] == $user['role_id']) ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($role['name']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-
-            <button type="submit" class="btn">Modifier le rôle</button>
-        </form>
-    </section>
-</div>
-
-</body>
-</html>
-
-<style>
+    <style>
+    /* Style général de la page */
     body {
         font-family: 'Arial', sans-serif;
         background-color: #f4f4f9;
@@ -177,3 +146,39 @@ $roles = $stmt_roles->fetchAll();
         background-color: #8d6e63;
     }
 </style>
+
+
+</head>
+<body>
+
+<div class="container">
+    <header>
+     
+        <h1>Modifier le rôle de l'utilisateur : <?php echo htmlspecialchars($user['name']); ?></h1>
+    
+    </header>
+
+    <section class="form-section">
+        <h2>Formulaire de modification du rôle</h2>
+        <form action="update_role.php" method="POST">
+            <!-- Champ caché pour envoyer l'ID de l'utilisateur -->
+            <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
+
+            <label for="role">Sélectionner un rôle :</label>
+            <select name="role_id" id="role" required>
+                <?php foreach ($roles as $role): ?>
+                    <!-- Pré-sélection du rôle actuel de l'utilisateur -->
+                    <option value="<?php echo $role['id']; ?>" <?php echo ($role['id'] == $user['role_id']) ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($role['name']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <button type="submit" class="btn">Modifier le rôle</button>
+        </form>
+    </section>
+</div>
+
+</body>
+</html>
+
